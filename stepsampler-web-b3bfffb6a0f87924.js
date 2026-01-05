@@ -49,10 +49,11 @@ function getArrayU8FromWasm0(ptr, len) {
  * @param {number | null} [rate]
  * @param {number | null} [silence_threshold]
  * @param {boolean | null} [stereo]
+ * @param {number | null} [bits_per_sample]
  * @returns {Uint8Array}
  */
-export function process_files(buffers, rate, silence_threshold, stereo) {
-    const ret = wasm.process_files(buffers, isLikeNone(rate) ? 0x100000001 : (rate) >>> 0, isLikeNone(silence_threshold) ? 0x100000001 : Math.fround(silence_threshold), isLikeNone(stereo) ? 0xFFFFFF : stereo ? 1 : 0);
+export function process_files(buffers, rate, silence_threshold, stereo, bits_per_sample) {
+    const ret = wasm.process_files(buffers, isLikeNone(rate) ? 0x100000001 : (rate) >>> 0, isLikeNone(silence_threshold) ? 0x100000001 : Math.fround(silence_threshold), isLikeNone(stereo) ? 0xFFFFFF : stereo ? 1 : 0, isLikeNone(bits_per_sample) ? 0xFFFFFF : bits_per_sample);
     if (ret[3]) {
         throw takeFromExternrefTable0(ret[2]);
     }
