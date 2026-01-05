@@ -30,6 +30,10 @@ function getStringFromWasm0(ptr, len) {
     return decodeText(ptr, len);
 }
 
+function isLikeNone(x) {
+    return x === undefined || x === null;
+}
+
 function takeFromExternrefTable0(idx) {
     const value = wasm.__wbindgen_export_0.get(idx);
     wasm.__externref_table_dealloc(idx);
@@ -42,10 +46,13 @@ function getArrayU8FromWasm0(ptr, len) {
 }
 /**
  * @param {any} buffers
+ * @param {number | null} [rate]
+ * @param {number | null} [silence_threshold]
+ * @param {boolean | null} [stereo]
  * @returns {Uint8Array}
  */
-export function process_files(buffers) {
-    const ret = wasm.process_files(buffers);
+export function process_files(buffers, rate, silence_threshold, stereo) {
+    const ret = wasm.process_files(buffers, isLikeNone(rate) ? 0x100000001 : (rate) >>> 0, isLikeNone(silence_threshold) ? 0x100000001 : Math.fround(silence_threshold), isLikeNone(stereo) ? 0xFFFFFF : stereo ? 1 : 0);
     if (ret[3]) {
         throw takeFromExternrefTable0(ret[2]);
     }
